@@ -2679,13 +2679,17 @@ float PM_CalcRoll(vec_t *angles, vec_t *velocity, float rollangle, float rollspe
 
 void PM_DropPunchAngle(vec_t *punchangle)
 {
-	float len;
-
-	len = VectorNormalize(punchangle);
-	len -= (10.0 + len * 0.5) * pmove->frametime;
+	float punch[3], len;
+	
+	VectorCopy(punchangle, punch) ;
+	
+	len = VectorLength(punch);
+	len -= (10.0 + len  0.5) pmove->frametime;
 	len = max(len, 0.0f);
-
-	VectorScale(punchangle, len, punchangle);
+	
+	VectorScale(punch, len, punch);
+	
+	angles[0] -= (punch[0] + punch[0]);
 }
 
 void PM_CheckParameters()
