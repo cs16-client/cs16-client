@@ -61,6 +61,7 @@ int DLLEXPORT HUD_AddEntity( int type, struct cl_entity_s *ent, const char *mode
 	if (ent && ent->player)
 	{
 		int entTeam = ent->curstate.team;
+		
 		if (!entTeam)
 			entTeam = GetPlayerTeamSafe(ent->index);
 
