@@ -58,6 +58,28 @@ int DLLEXPORT HUD_AddEntity( int type, struct cl_entity_s *ent, const char *mode
 	// each frame every entity passes this function, so the overview hooks 
 	// it to filter the overview entities
 
+	if (ent && ent->player)
+	{
+		int entTeam = ent->curstate.team;
+		if (!entTeam)
+			entTeam = GetPlayerTeamSafe(ent->index);
+
+		int localTeam = gHUD.m_iTeamNumber;
+
+		if (entTeam > 0 && localTeam > 0 && entTeam != localTeam)
+		{
+			vec3_t head, feet;
+
+			VectorCopy(ent->origin, head);
+			VectorCopy(ent->origin, feet);
+
+			head[2] += 28.0f;
+			feet[2] -= 35.0f;
+
+			ent3DPositions.push_back(std::make_pair(head, feet));
+		}
+	}
+
 	if ( g_iUser1 )
 	{
 		gHUD.m_Spectator.AddOverviewEntity( type, ent, modelname );
